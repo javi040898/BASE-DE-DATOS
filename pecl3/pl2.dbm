@@ -1,0 +1,366 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+CAUTION: Do not modify this file unless you know what you are doing.
+         Unexpected results may occur if the code is changed deliberately.
+-->
+<dbmodel pgmodeler-ver="0.9.1" last-position="0,675" last-zoom="1"
+	 default-schema="public" default-owner="postgres">
+<database name="new_database" is-template="false" allow-conns="true">
+</database>
+
+<schema name="public" fill-color="#e1e1e1" sql-disabled="true">
+</schema>
+
+<table name="Músico">
+	<schema name="public"/>
+	<role name="postgres"/>
+	<position x="160" y="420"/>
+	<column name="DNI" not-null="true">
+		<type name="varchar" length="9"/>
+	</column>
+	<column name="CP">
+		<type name="integer" length="0"/>
+	</column>
+	<column name="TLF">
+		<type name="integer" length="0"/>
+	</column>
+	<column name="Nombre">
+		<type name="varchar" length="40"/>
+	</column>
+	<column name="Apellidos">
+		<type name="varchar" length="40"/>
+	</column>
+	<column name="Ciudad">
+		<type name="varchar" length="0"/>
+	</column>
+	<column name="Provincia">
+		<type name="varchar" length="0"/>
+	</column>
+	<column name="Instrumento">
+		<type name="varchar" length="40"/>
+	</column>
+	<constraint name="Músico_pk" type="pk-constr" table="public.&quot;Músico&quot;">
+		<columns names="DNI" ref-type="src-columns"/>
+	</constraint>
+
+	<customidxs object-type="column">
+		<object name="Código Grupo_Grupo" index="8"/>
+		<object name="calle_Direccion" index="9"/>
+		<object name="número_Direccion" index="10"/>
+		<object name="piso_Direccion" index="11"/>
+	</customidxs>
+
+	<customidxs object-type="constraint">
+		<object name="Direccion_fk" index="2"/>
+		<object name="Grupo_fk" index="1"/>
+	</customidxs>
+</table>
+
+<table name="Grupo">
+	<schema name="public"/>
+	<role name="postgres"/>
+	<position x="700" y="380"/>
+	<column name="Género">
+		<type name="varchar" length="40"/>
+	</column>
+	<column name="Código Grupo" not-null="true">
+		<type name="integer" length="0"/>
+	</column>
+	<constraint name="Grupo_pk" type="pk-constr" table="public.&quot;Grupo&quot;">
+		<columns names="Código Grupo" ref-type="src-columns"/>
+	</constraint>
+</table>
+
+<relationship name="Grupo_tiene_muchos_Músico" type="rel1n"
+	 src-col-pattern="{sc}_{st}"
+	 pk-pattern="{dt}_pk" uq-pattern="{dt}_uq"
+	 src-fk-pattern="{st}_fk"
+	 custom-color="#83af1f"
+	 src-table="public.&quot;Grupo&quot;"
+	 dst-table="public.&quot;Músico&quot;"
+	 src-required="false" dst-required="false"/>
+
+<table name="Disco">
+	<schema name="public"/>
+	<role name="postgres"/>
+	<position x="1120" y="40"/>
+	<column name="Título">
+		<type name="varchar" length="40"/>
+	</column>
+	<column name="Género">
+		<type name="varchar" length="0"/>
+	</column>
+	<column name="Número de referencia" not-null="true">
+		<type name="integer" length="0"/>
+	</column>
+	<column name="Fecha">
+		<type name="date" length="0"/>
+	</column>
+	<column name="Formato">
+		<type name="varchar" length="40"/>
+	</column>
+	<constraint name="Disco_pk" type="pk-constr" table="public.&quot;Disco&quot;">
+		<columns names="Número de referencia" ref-type="src-columns"/>
+	</constraint>
+
+	<customidxs object-type="column">
+		<object name="Código Grupo_Grupo" index="5"/>
+	</customidxs>
+
+	<customidxs object-type="constraint">
+		<object name="Grupo_fk" index="1"/>
+	</customidxs>
+</table>
+
+<relationship name="Grupo_tiene_muchos_Disco" type="rel1n"
+	 src-col-pattern="{sc}_{st}"
+	 pk-pattern="{dt}_pk" uq-pattern="{dt}_uq"
+	 src-fk-pattern="{st}_fk"
+	 custom-color="#83af1f"
+	 src-table="public.&quot;Grupo&quot;"
+	 dst-table="public.&quot;Disco&quot;"
+	 src-required="false" dst-required="false">
+	<label ref-type="src-label">
+		<position x="4.60942" y="17.725"/>
+	</label>
+</relationship>
+
+<table name="Canción">
+	<schema name="public"/>
+	<role name="postgres"/>
+	<position x="380" y="100"/>
+	<column name="Nombre" not-null="true">
+		<type name="varchar" length="40"/>
+	</column>
+	<column name="Duración">
+		<type name="time" length="0"/>
+	</column>
+	<column name="Fecha de Grabación" not-null="true">
+		<type name="date" length="0"/>
+	</column>
+	<constraint name="Canción_pk" type="pk-constr" table="public.&quot;Canción&quot;">
+		<columns names="Nombre,Fecha de Grabación" ref-type="src-columns"/>
+	</constraint>
+
+	<customidxs object-type="column">
+		<object name="DNI_Músico" index="3"/>
+		<object name="Número de referencia_Disco" index="4"/>
+	</customidxs>
+
+	<customidxs object-type="constraint">
+		<object name="Disco_fk" index="2"/>
+		<object name="Músico_fk" index="1"/>
+	</customidxs>
+</table>
+
+<relationship name="Músico_tiene_muchos_Canción" type="rel1n"
+	 src-col-pattern="{sc}_{st}"
+	 pk-pattern="{dt}_pk" uq-pattern="{dt}_uq"
+	 src-fk-pattern="{st}_fk"
+	 custom-color="#83af1f"
+	 src-table="public.&quot;Músico&quot;"
+	 dst-table="public.&quot;Canción&quot;"
+	 src-required="false" dst-required="false"/>
+
+<relationship name="Disco_tiene_muchos_Canción" type="rel1n"
+	 src-col-pattern="{sc}_{st}"
+	 pk-pattern="{dt}_pk" uq-pattern="{dt}_uq"
+	 src-fk-pattern="{st}_fk"
+	 custom-color="#83af1f"
+	 src-table="public.&quot;Disco&quot;"
+	 dst-table="public.&quot;Canción&quot;"
+	 src-required="false" dst-required="false"/>
+
+<table name="Concierto">
+	<schema name="public"/>
+	<role name="postgres"/>
+	<position x="420" y="960"/>
+	<column name="Fecha">
+		<type name="date" length="0"/>
+	</column>
+	<column name="País">
+		<type name="varchar" length="40"/>
+	</column>
+	<column name="Recinto">
+		<type name="varchar" length="40"/>
+	</column>
+	<column name="Ciudad">
+		<type name="varchar" length="40"/>
+	</column>
+	<column name="Código" not-null="true">
+		<type name="integer" length="0"/>
+	</column>
+	<constraint name="Concierto_pk" type="pk-constr" table="public.&quot;Concierto&quot;">
+		<columns names="Código" ref-type="src-columns"/>
+	</constraint>
+</table>
+
+<relationship name="muchos_Concierto_tiene_muchos_Grupo" type="relnn"
+	 src-col-pattern="{sc}_{st}" dst-col-pattern="{sc}_{dt}"
+	 pk-pattern="{gt}_pk" uq-pattern="{gt}_uq"
+	 src-fk-pattern="{st}_fk" dst-fk-pattern="{dt}_fk"
+	 pk-col-pattern="id"
+	 custom-color="#83af1f"
+	 src-table="public.&quot;Concierto&quot;"
+	 dst-table="public.&quot;Grupo&quot;"
+	 src-required="false" dst-required="false"
+	 table-name="muchos_Concierto_tiene_muchos_Grupo"/>
+
+<table name="Entrada">
+	<schema name="public"/>
+	<role name="postgres"/>
+	<position x="920" y="720"/>
+	<column name="Precio">
+		<type name="money" length="0"/>
+	</column>
+	<column name="Código" not-null="true">
+		<type name="integer" length="0"/>
+	</column>
+	<constraint name="Entrada_pk" type="pk-constr" table="public.&quot;Entrada&quot;">
+		<columns names="Código" ref-type="src-columns"/>
+	</constraint>
+</table>
+
+<relationship name="Concierto_tiene_muchos_Entrada" type="rel1n"
+	 src-col-pattern="{sc}_{st}"
+	 pk-pattern="{dt}_pk" uq-pattern="{dt}_uq"
+	 src-fk-pattern="{st}_fk"
+	 custom-color="#83af1f"
+	 src-table="public.&quot;Concierto&quot;"
+	 dst-table="public.&quot;Entrada&quot;"
+	 src-required="false" dst-required="false"/>
+
+<table name="Usuario">
+	<schema name="public"/>
+	<role name="postgres"/>
+	<position x="1000" y="460"/>
+	<column name="Nombre">
+		<type name="varchar" length="40"/>
+	</column>
+	<column name="Apellidos">
+		<type name="varchar" length="40"/>
+	</column>
+	<column name="DNI" not-null="true">
+		<type name="varchar" length="9"/>
+	</column>
+	<column name="e-mail">
+		<type name="varchar" length="40"/>
+	</column>
+	<column name="Puntos">
+		<type name="integer" length="0"/>
+	</column>
+	<constraint name="Usuario_pk" type="pk-constr" table="public.&quot;Usuario&quot;">
+		<columns names="DNI" ref-type="src-columns"/>
+	</constraint>
+</table>
+
+<relationship name="Usuario_tiene_muchos_Entrada" type="rel1n"
+	 src-col-pattern="{sc}_{st}"
+	 pk-pattern="{dt}_pk" uq-pattern="{dt}_uq"
+	 src-fk-pattern="{st}_fk"
+	 custom-color="#83af1f"
+	 src-table="public.&quot;Usuario&quot;"
+	 dst-table="public.&quot;Entrada&quot;"
+	 src-required="false" dst-required="false"/>
+
+<relationship name="muchos_Usuario_tiene_muchos_Disco" type="relnn"
+	 src-col-pattern="{sc}_{st}" dst-col-pattern="{sc}_{dt}"
+	 pk-pattern="{gt}_pk" uq-pattern="{gt}_uq"
+	 src-fk-pattern="{st}_fk" dst-fk-pattern="{dt}_fk"
+	 pk-col-pattern="id"
+	 custom-color="#83af1f"
+	 src-table="public.&quot;Usuario&quot;"
+	 dst-table="public.&quot;Disco&quot;"
+	 src-required="false" dst-required="false"
+	 table-name="muchos_Usuario_tiene_muchos_Disco">
+	<label ref-type="dst-label">
+		<position x="4.17692" y="3.88755"/>
+	</label>
+</relationship>
+
+<table name="Direccion">
+	<schema name="public"/>
+	<role name="postgres"/>
+	<position x="60" y="980"/>
+	<column name="calle" not-null="true">
+		<type name="varchar" length="40"/>
+	</column>
+	<column name="número" not-null="true">
+		<type name="smallint" length="0"/>
+	</column>
+	<column name="piso" not-null="true">
+		<type name="varchar" length="40"/>
+	</column>
+	<constraint name="Direccion_pk" type="pk-constr" table="public.&quot;Direccion&quot;">
+		<columns names="calle,número,piso" ref-type="src-columns"/>
+	</constraint>
+</table>
+
+<relationship name="Direccion_tiene_muchos_Músico" type="rel1n"
+	 src-col-pattern="{sc}_{st}"
+	 pk-pattern="{dt}_pk" uq-pattern="{dt}_uq"
+	 src-fk-pattern="{st}_fk"
+	 custom-color="#83af1f"
+	 src-table="public.&quot;Direccion&quot;"
+	 dst-table="public.&quot;Músico&quot;"
+	 src-required="false" dst-required="false"/>
+
+<table name="Opinion">
+	<schema name="public"/>
+	<role name="postgres"/>
+	<position x="1340" y="940"/>
+	<column name="Opinion concierto">
+		<type name="smallint" length="150"/>
+	</column>
+	<column name="Opinion Disco">
+		<type name="smallint" length="150"/>
+	</column>
+	<column name="Numero Opinion" not-null="true">
+		<type name="smallint" length="0"/>
+	</column>
+	<constraint name="Opinion_pk" type="pk-constr" table="public.&quot;Opinion&quot;">
+		<columns names="Numero Opinion" ref-type="src-columns"/>
+	</constraint>
+
+	<customidxs object-type="column">
+		<object name="Código_Concierto" index="4"/>
+		<object name="DNI_Usuario" index="5"/>
+		<object name="Número de referencia_Disco" index="3"/>
+	</customidxs>
+
+	<customidxs object-type="constraint">
+		<object name="Concierto_fk" index="2"/>
+		<object name="Disco_fk" index="1"/>
+		<object name="Opinion_uq" index="4"/>
+		<object name="Usuario_fk" index="3"/>
+	</customidxs>
+</table>
+
+<relationship name="Disco_tiene_muchos_Opinion" type="rel1n"
+	 src-col-pattern="{sc}_{st}"
+	 pk-pattern="{dt}_pk" uq-pattern="{dt}_uq"
+	 src-fk-pattern="{st}_fk"
+	 custom-color="#83af1f"
+	 src-table="public.&quot;Disco&quot;"
+	 dst-table="public.&quot;Opinion&quot;"
+	 src-required="false" dst-required="false"/>
+
+<relationship name="Concierto_tiene_muchos_Opinion" type="rel1n"
+	 src-col-pattern="{sc}_{st}"
+	 pk-pattern="{dt}_pk" uq-pattern="{dt}_uq"
+	 src-fk-pattern="{st}_fk"
+	 custom-color="#83af1f"
+	 src-table="public.&quot;Concierto&quot;"
+	 dst-table="public.&quot;Opinion&quot;"
+	 src-required="false" dst-required="false"/>
+
+<relationship name="Opinion_tiene_uno_Usuario" type="rel11"
+	 src-col-pattern="{sc}_{st}"
+	 pk-pattern="{dt}_pk" uq-pattern="{dt}_uq"
+	 src-fk-pattern="{st}_fk"
+	 custom-color="#83af1f"
+	 src-table="public.&quot;Usuario&quot;"
+	 dst-table="public.&quot;Opinion&quot;"
+	 src-required="false" dst-required="false"/>
+
+</dbmodel>

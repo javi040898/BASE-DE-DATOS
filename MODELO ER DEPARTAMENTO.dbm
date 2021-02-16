@@ -1,0 +1,138 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+CAUTION: Do not modify this file unless you know what you are doing.
+         Unexpected results may occur if the code is changed deliberately.
+-->
+<dbmodel pgmodeler-ver="0.9.1" last-position="0,0" last-zoom="1"
+	 default-schema="public" default-owner="postgres">
+<database name="new_database" is-template="false" allow-conns="true">
+</database>
+
+<schema name="public" fill-color="#e1e1e1" sql-disabled="true">
+</schema>
+
+<table name="DEPARTAMENTO">
+	<schema name="public"/>
+	<role name="postgres"/>
+	<position x="920" y="100"/>
+	<column name="COD_DPTO" not-null="true">
+		<type name="smallint" length="0"/>
+	</column>
+	<column name="NOMBRE" not-null="true">
+		<type name="varchar" length="0"/>
+	</column>
+	<column name="DIRECTOR">
+		<type name="varchar" length="0"/>
+	</column>
+	<constraint name="DEPARTAMENTO_pk" type="pk-constr" table="public.&quot;DEPARTAMENTO&quot;">
+		<columns names="COD_DPTO" ref-type="src-columns"/>
+	</constraint>
+</table>
+
+<table name="EMPLEADO">
+	<schema name="public"/>
+	<role name="postgres"/>
+	<position x="140" y="40"/>
+	<column name="NOMBRE">
+		<type name="varchar" length="0"/>
+	</column>
+	<column name="SEGURIDA SOCIAL">
+		<type name="integer" length="0"/>
+	</column>
+	<column name="SALARIO">
+		<type name="money" length="0"/>
+	</column>
+	<column name="SEXO">
+		<type name="varchar" length="0"/>
+	</column>
+	<column name="FECHA NACIMIENTO">
+		<type name="date" length="0"/>
+	</column>
+	<column name="DNI" not-null="true">
+		<type name="varchar" length="0"/>
+	</column>
+	<constraint name="EMPLEADO_pk" type="pk-constr" table="public.&quot;EMPLEADO&quot;">
+		<columns names="DNI" ref-type="src-columns"/>
+	</constraint>
+</table>
+
+<table name="FAMILIA">
+	<schema name="public"/>
+	<role name="postgres"/>
+	<position x="200" y="380"/>
+	<column name="DNI" not-null="true">
+		<type name="varchar" length="0"/>
+	</column>
+	<column name="SEXO">
+		<type name="varchar" length="0"/>
+	</column>
+	<column name="NOMBRE">
+		<type name="varchar" length="0"/>
+	</column>
+	<column name="FECHA NACIMIENTO">
+		<type name="date" length="0"/>
+	</column>
+	<column name="PARENTESCO">
+		<type name="varchar" length="0"/>
+	</column>
+	<constraint name="FAMILIA_pk" type="pk-constr" table="public.&quot;FAMILIA&quot;">
+		<columns names="DNI" ref-type="src-columns"/>
+	</constraint>
+</table>
+
+<table name="PROYECTO">
+	<schema name="public"/>
+	<role name="postgres"/>
+	<position x="700" y="440"/>
+	<column name="NÚMERO" not-null="true">
+		<type name="smallint" length="0"/>
+	</column>
+	<column name="NOMBRE">
+		<type name="varchar" length="0"/>
+	</column>
+	<column name="LUGAR">
+		<type name="varchar" length="0"/>
+	</column>
+	<constraint name="PROYECTO_pk" type="pk-constr" table="public.&quot;PROYECTO&quot;">
+		<columns names="NÚMERO" ref-type="src-columns"/>
+	</constraint>
+</table>
+
+<table name="LUGAR">
+	<schema name="public"/>
+	<role name="postgres"/>
+	<position x="1020" y="300"/>
+	<column name="ID" not-null="true">
+		<type name="varchar" length="0"/>
+	</column>
+	<column name="NOMBRE">
+		<type name="varchar" length="0"/>
+	</column>
+	<constraint name="LUGAR_pk" type="pk-constr" table="public.&quot;LUGAR&quot;">
+		<columns names="ID" ref-type="src-columns"/>
+	</constraint>
+</table>
+
+<relationship name="DEPARTAMENTO_tiene_muchos_EMPLEADO" type="rel1n"
+	 src-col-pattern="COD_DEP"
+	 pk-pattern="{dt}_pk" uq-pattern="{dt}_uq"
+	 src-fk-pattern="{st}_fk"
+	 custom-color="#83af1f"
+	 src-table="public.&quot;DEPARTAMENTO&quot;"
+	 dst-table="public.&quot;EMPLEADO&quot;"
+	 src-required="false" dst-required="false">
+	<label ref-type="name-label">
+		<position x="0" y="0"/>
+	</label>
+</relationship>
+
+<relationship name="EMPLEADO_tiene_muchos_FAMILIA" type="rel1n"
+	 src-col-pattern="{sc}_{st}"
+	 pk-pattern="{dt}_pk" uq-pattern="{dt}_uq"
+	 src-fk-pattern="{st}_fk"
+	 custom-color="#83af1f"
+	 src-table="public.&quot;EMPLEADO&quot;"
+	 dst-table="public.&quot;FAMILIA&quot;"
+	 src-required="false" dst-required="false"/>
+
+</dbmodel>
